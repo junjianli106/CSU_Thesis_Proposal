@@ -279,11 +279,17 @@
 	\put(-2,-200){\zihao{5} \bfseries 成员}
 	\put(-2,-308){\zihao{5} \bfseries 秘书}
 	\put(-26,-333){\zihao{5} \bfseries 评审意见：}
-	\put(-26,-420){\zihao{5} \bfseries 评定等级（在$\Box$ 内打“ $\surd$ ”选择）：}	
-	\put(8,-435){\zihao{5} \bfseries 优秀（$\Box$A+、$\Box$A、$\Box$A-）}
-	\put(195,-435){\zihao{5} \bfseries 良好（$\Box$B+、$\Box$B、$\Box$B-）}
-	\put(8,-450){\zihao{5} \bfseries 合格（$\Box$C+、$\Box$C、$\Box$C-）}
-	\put(195,-450){\zihao{5} \bfseries 不合格（$\Box$D）}
+	% \put(-26,-420){\zihao{5} \bfseries 评定等级（在$\Box$ 内打“ $\surd$ ”选择）：}	
+	% \put(8,-435){\zihao{5} \bfseries 优秀（$\Box$A+、$\Box$A、$\Box$A-）}
+	% \put(195,-435){\zihao{5} \bfseries 良好（$\Box$B+、$\Box$B、$\Box$B-）}
+	% \put(8,-450){\zihao{5} \bfseries 合格（$\Box$C+、$\Box$C、$\Box$C-）}
+	% \put(195,-450){\zihao{5} \bfseries 不合格（$\Box$D）}
+
+    \put(-26,-420){\zihao{5} \bfseries 评定等级（在\underline{\hspace{2.5em}}处打分）：}
+    \put(8,-435){\zihao{5} \bfseries 优秀（$\ge$85）\underline{\hspace{3cm}}}
+    \put(195,-435){\zihao{5} \bfseries 良好（84-75）\underline{\hspace{3cm}}}
+    \put(8,-450){\zihao{5} \bfseries 合格（74-60）\underline{\hspace{3cm}}}
+    \put(195,-450){\zihao{5} \bfseries 不合格（$<$60）\underline{\hspace{3cm}}}
 
 
 	\put(105,-500){\zihao{5}评审小组组长签字：}
