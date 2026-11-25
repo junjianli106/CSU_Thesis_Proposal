@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{CSUResearchProposal}[11/21/2018 CSU Research Proposal.]
+\ProvidesClass{CSUResearchProposal}[2026/11/25 CSU Research Proposal]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  中南大学开题报告模板
 %  钟乙源，刘亮
@@ -40,7 +40,11 @@
 }
 
 
-\setmainfont{Times New Roman}
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
+\IfFontExistsTF{SimSun}{
+  \setCJKmainfont[AutoFakeBold=2]{SimSun}
+  \setCJKfamilyfont{zhsong}[AutoFakeBold=2]{SimSun}
+}{}
 
 \RequirePackage{caption}
 \DeclareCaptionFont{song}{\songti}
@@ -57,8 +61,8 @@
 
 \RequirePackage{xunicode}% provides unicode character macros
 \RequirePackage{xltxtra} % provides some fixes/extras
-\RequirePackage{fancyhdr}
-\RequirePackage{fancybox}
+\RequirePackage[a4paper,top=25.4mm,bottom=25.4mm,left=31.75mm,right=31.75mm]{geometry}
+\RequirePackage{tikz}
 
 \RequirePackage{setspace}
 \RequirePackage{ifthen,epsfig,graphicx}
@@ -125,6 +129,11 @@
 \newcommand{\@ReviewerSixInstitute}{?}
 \newcommand{\ReviewerSix}[3]{\renewcommand{\@ReviewerSixName}{#1} \renewcommand{\@ReviewerSixTitle}{#2} \renewcommand{\@ReviewerSixInstitute}{#3}}
 
+\newcommand{\@ReviewerSevenName}{}
+\newcommand{\@ReviewerSevenTitle}{}
+\newcommand{\@ReviewerSevenInstitute}{}
+\newcommand{\ReviewerSeven}[3]{\renewcommand{\@ReviewerSevenName}{#1}\renewcommand{\@ReviewerSevenTitle}{#2}\renewcommand{\@ReviewerSevenInstitute}{#3}}
+
 \newcommand{\@SecretaryName}{?}
 \newcommand{\@SecretaryTitle}{?}
 \newcommand{\@SecretaryInstitute}{?}
@@ -153,176 +162,98 @@
 
 \RequirePackage{lipsum}
 
+% Word 表格宽 8928 twip，略宽于两侧页边距之间的文字区。
+\newlength{\proposalFormWidth}
+\setlength{\proposalFormWidth}{446.4bp}
+\newif\ifproposalBody
+\pagestyle{empty}
+\AddToHook{shipout/background}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[inner sep=0pt] at (current page.center)
+      {\includegraphics[width=218.87mm,height=303.07mm]{figures/csu_bg.jpg}};
+    \ifproposalBody
+      \draw[line width=.5bp]
+        ([xshift=-.5\proposalFormWidth,yshift=-25.4mm]current page.north)
+        rectangle ++(\proposalFormWidth,-232mm);
+    \fi
+  \end{tikzpicture}%
+}
+
+\newcommand{\proposalCoverField}[2]{%
+  \makebox[6em][s]{#1：}& #2\\\cline{2-2}%
+}
 \renewcommand{\maketitle}{%
-  \thispagestyle{empty}
-  \clearpage
-  \noindent{\leftline{}}\\
-  \vspace{3em}\\
-  
-  \noindent{\centerline{ \songti \zihao{1} \textbf{中~~南~~大~~学}}}\\~\\
-  \noindent{\centerline{ \songti \zihao{1} \textbf{研究生学位论文开题报告}}}\\
-  
-  \vspace{10em}
-\begin{center}
-		\zihao{-4}
-		\linespread{1.25}\selectfont
-        \begin{tabular}{>{}p{2.6cm} >{}p{6.5cm}<{\centering}}
-        {{\makebox[75pt][s]{姓名：}}} & \@author\\\cline{2-2}\\[-1.8ex]
-		{{\makebox[75pt][s]{学号：}}} & \@StudentID\\\cline{2-2}\\[-1.8ex]
-		{{\makebox[75pt][s]{论文题目：}}} &{\@ThesisTitle}\\\cline{2-2}\\[-1.8ex]
-		{{\makebox[75pt][s]{课题来源：}}} & \@SubjectFrom\\\cline{2-2}\\[-1.8ex]
-		{{\makebox[75pt][s]{攻读学位：}}} & \@Degree\\\cline{2-2}\\[-1.8ex]
-		{{\makebox[75pt][s]{指导教师：}}} & \@Supervisor\\\cline{2-2}\\[-1.8ex]
-		{{\makebox[75pt][s]{学科专业：}}} & \@Major\\\cline{2-2}\\[-1.8ex]
-		{{\makebox[75pt][s]{二级单位：}}} & \@School\\\cline{2-2}\\[-1.8ex]
-		{{\makebox[75pt][s]{填表日期：}}} & \@Date\\\cline{2-2}\\[-1.8ex]
-        \end{tabular}
-    \\
-    \vspace{35mm}
-    {\songti \bfseries\zihao{3}{中南大学研究生院制}}
-\end{center}
-  \clearpage
-  \setcounter{page}{1}%
-  \fancypagestyle{firststyle}
-{
-	\fancyhead{}
-	\fancyfoot[RO]{}
-	\fancyfoot[LE]{}
-	\fancyfoot[C]{-\thepage-}
-	\renewcommand{\headrulewidth}{0pt} %页眉横线宽度===========
-}
-\thispagestyle{firststyle}
-%\thisfancy
-\clearpage
-\pagestyle{fancy}
-\fancyhead{}
-\fancyfoot[RO]{}
-\fancyfoot[LE]{}
-\fancyfoot[C]{-\thepage-}
-\renewcommand{\headrulewidth}{0pt} %页眉横线宽度===========
-
-%\renewcommand{\headsep}{5pt}
-%\renewcommand{\footskip}{10pt}
-\fancypage{%
-	\setlength{\fboxsep}{8pt}%
-	\setlength{\fboxrule}{0.8pt}%
-	\setlength{\shadowsize}{0pt}%
-	\shadowbox}{}
-
-}
-
-
-
-\ifthenelse{\boolean{@titlepage}}{%
-  \let\@ldabstract=\abstract
-  \let\@ldendabstract=\endabstract
-  \renewenvironment{abstract}{%
-    \@ldabstract
-    \setcounter{page}{0}%
-  }{
-    \par
-    \@keywords
-    \vfill
+  \clearpage\thispagestyle{empty}
+  \begingroup
+    \linespread{1}\selectfont
+    \vspace*{2mm}\noindent{\zihao{4}附件1}\par
+    \vspace{11mm}
     \begin{center}
-      \@lab
+      {\songti\bfseries\fontsize{26bp}{46bp}\selectfont
+       中\enspace 南\enspace 大\enspace 学\par 研究生学位论文开题报告\par}
+      \vspace{44mm}
+      {\zihao{-4}\renewcommand{\arraystretch}{1.58}%
+       \begin{tabular}{@{}p{34mm}@{}>{\centering\arraybackslash}m{73mm}@{}}
+         \proposalCoverField{姓名}{\@author}
+         \proposalCoverField{学号}{\@StudentID}
+         \proposalCoverField{论文题目}{\@ThesisTitle}
+         \proposalCoverField{课题来源}{\@SubjectFrom}
+         \proposalCoverField{攻读学位}{\@Degree}
+         \proposalCoverField{指导教师}{\@Supervisor}
+         \proposalCoverField{学科专业}{\@Major}
+         \proposalCoverField{二级单位}{\@School}
+         \proposalCoverField{填表日期}{\@Date}
+       \end{tabular}\par}
+      \vspace{48mm}
+      {\songti\bfseries\fontsize{16bp}{20bp}\selectfont 中南大学研究生院制\par}
     \end{center}
-    \vfill
-    \@ldendabstract
-    \setcounter{page}{1}%
-  }%
-}{}
+  \endgroup
+  % 表格位于纸张中央，正文留在表格内；长文可自动续页。
+  \newgeometry{left=28.2mm,right=28.2mm,top=27.4mm,bottom=42mm}
+  \proposalBodytrue
+}
 
-
+% 表格中的签字栏和评语栏按最小高度留白。
+\newcommand{\proposalFullRow}[1]{\multicolumn{5}{|l|}{#1}}
+\newcommand{\proposalReviewBlock}[3]{%
+  \begin{minipage}[c][#1][t]{\dimexpr\proposalFormWidth-2\tabcolsep-2\arrayrulewidth\relax}
+    \vspace{1mm}#2\par\vfill #3\par\vspace{1mm}
+  \end{minipage}%
+}
+\newcommand{\proposalReviewerRow}[2]{%
+  \rule[-3mm]{0pt}{9.4mm}#1 & \csname @#2Name\endcsname &
+  \csname @#2Title\endcsname & \csname @#2Institute\endcsname & \\
+}
+% 单元格宽度含左右留白，最后一列吸收表格边线的宽度。
+\newcolumntype{P}[1]{>{\centering\arraybackslash}m{\dimexpr#1-2\tabcolsep-\arrayrulewidth\relax}}
 \AtEndDocument{%
-  \clearpage
-  \begin{picture}(100,100)(0,0)
-	\put(-24,85){\zihao{5} \bfseries \songti 八、指导教师意见}
-    \put(140,-15){{指导教师签字：}}
-	\put(300,-15){日期：}
-	
-	\put(-24,-39){\zihao{5} \bfseries \songti 九、专家评审意见}
-	\put(-22,-70){\zihao{5} \bfseries 评审小组成员}
-	\put(78,-70){\zihao{5} \bfseries 姓名}
-	\put(170,-70){\zihao{5} \bfseries 职称}
-	\put(278,-70){\zihao{5} \bfseries 工作单位}
-	\put(388,-70){\zihao{5} \bfseries 本人签名}				
-	
-	\put(-2,-100){\zihao{5} \bfseries 组长}
-	\put(71,-100){\zihao{5} \bfseries \@ReviewerOneName}
-	\put(170,-100){\zihao{5} \bfseries \@ReviewerOneTitle}
-	\put(235,-100){\zihao{5} \bfseries \@ReviewerOneInstitute}
-	
-	\put(71,-130){\zihao{5} \bfseries \@ReviewerTwoName}
-	\put(170,-130){\zihao{5} \bfseries \@ReviewerTwoTitle}
-	\put(235,-130){\zihao{5} \bfseries \@ReviewerTwoInstitute}
-
-	\put(71,-160){\zihao{5} \bfseries \@ReviewerThreeName}
-	\put(170,-160){\zihao{5} \bfseries \@ReviewerThreeTitle}
-	\put(235,-160){\zihao{5} \bfseries \@ReviewerThreeInstitute}
-
-	\put(71,-190){\zihao{5} \bfseries \@ReviewerFourName}
-	\put(170,-190){\zihao{5} \bfseries \@ReviewerFourTitle}
-	\put(235,-190){\zihao{5} \bfseries \@ReviewerFourInstitute}
-	
-	\put(71,-220){\zihao{5} \bfseries \@ReviewerFiveName}
-	\put(170,-220){\zihao{5} \bfseries \@ReviewerFiveTitle}
-	\put(235,-220){\zihao{5} \bfseries \@ReviewerFiveInstitute}	
-	
-	\put(71,-250){\zihao{5} \bfseries \@ReviewerSixName}
-	\put(170,-250){\zihao{5} \bfseries \@ReviewerSixTitle}
-	\put(235,-250){\zihao{5} \bfseries \@ReviewerSixInstitute}	
-
-	\put(71,-310){\zihao{5} \bfseries \@SecretaryName}
-	\put(170,-310){\zihao{5} \bfseries \@SecretaryTitle}
-	\put(235,-310){\zihao{5} \bfseries \@SecretaryInstitute}
-			
-	\put(-2,-200){\zihao{5} \bfseries 成员}
-	\put(-2,-308){\zihao{5} \bfseries 秘书}
-	\put(-26,-333){\zihao{5} \bfseries 评审意见：}
-	% \put(-26,-420){\zihao{5} \bfseries 评定等级（在$\Box$ 内打“ $\surd$ ”选择）：}	
-	% \put(8,-435){\zihao{5} \bfseries 优秀（$\Box$A+、$\Box$A、$\Box$A-）}
-	% \put(195,-435){\zihao{5} \bfseries 良好（$\Box$B+、$\Box$B、$\Box$B-）}
-	% \put(8,-450){\zihao{5} \bfseries 合格（$\Box$C+、$\Box$C、$\Box$C-）}
-	% \put(195,-450){\zihao{5} \bfseries 不合格（$\Box$D）}
-
-    \put(-26,-420){\zihao{5} \bfseries 评定等级（在\underline{\hspace{2.5em}}处打分）：}
-    \put(8,-435){\zihao{5} \bfseries 优秀（$\ge$85）\underline{\hspace{3cm}}}
-    \put(195,-435){\zihao{5} \bfseries 良好（84-75）\underline{\hspace{3cm}}}
-    \put(8,-450){\zihao{5} \bfseries 合格（74-60）\underline{\hspace{3cm}}}
-    \put(195,-450){\zihao{5} \bfseries 不合格（$<$60）\underline{\hspace{3cm}}}
-
-
-	\put(105,-500){\zihao{5}评审小组组长签字：}
-	\put(300,-500){\zihao{5}日期：}
-	
-	\put(-24,-517){\zihao{5} \bfseries \songti 十、所在二级单位意见}	
-	\put(105,-580){\zihao{5}负责人签字：}	
-	\put(265,-580){\zihao{5}（单位盖章）日期：}		    
-    
-    \put(-29.5,-20){\line(1,0){472.5}}
-    
-    \put(-29.5,-50){\line(1,0){472.5}}
-    \put(-29.5,-80){\line(1,0){472.5}}
-    \put(-29.5,-110){\line(1,0){472.5}}
-    \put(47,-140){\line(1,0){395}}
-    \put(47,-170){\line(1,0){395}}
-    \put(47,-200){\line(1,0){395}}
-    \put(47,-230){\line(1,0){395}}
-    \put(47,-260){\line(1,0){395}} 
-    \put(-29.5,-290){\line(1,0){472.5}}                     
-    \put(-29.5,-320){\line(1,0){472.5}}
-    
-    \put(47,-50){\line(0,-1){270}}
-    \put(137,-50){\line(0,-1){270}}
-    \put(227,-50){\line(0,-1){270}}
-    \put(367,-50){\line(0,-1){270}}            
-    
-    
-    \put(-29.5,-505){\line(1,0){472.5}}
-%    \put(30,-605.5){\line(0,1){714}}
-  \end{picture}
-}  % end of \AtEndDocument
-
-
-
-
+  \clearpage\proposalBodyfalse\restoregeometry
+  \begingroup
+    \zihao{5}\songti\linespread{1}\selectfont
+    \setlength{\arrayrulewidth}{.5bp}
+    \setlength{\tabcolsep}{1.4mm}
+    \noindent\makebox[\textwidth][c]{%
+      \begin{tabular}{|P{79.4bp}|P{70.9bp}|P{77.9bp}|P{148.85bp}|P{\dimexpr69.35bp-\arrayrulewidth\relax}|}
+        \hline
+        \proposalFullRow{\proposalReviewBlock{37mm}{\bfseries 八、指导教师意见}
+          {\centering 指导教师签字：\hspace{25mm} 日期：\hspace{12mm}}}\\\hline
+        \proposalFullRow{\rule[-3mm]{0pt}{10mm}\bfseries 九、专家评审意见}\\\hline
+        \rule[-3mm]{0pt}{9.8mm}\bfseries 评审小组成员 & \bfseries 姓名 & \bfseries 职称 & \bfseries 工作单位 & \bfseries 本人签名 \\\hline
+        \proposalReviewerRow{组长}{ReviewerOne}\hline
+        \proposalReviewerRow{}{ReviewerTwo}\cline{2-5}
+        \proposalReviewerRow{}{ReviewerThree}\cline{2-5}
+        \proposalReviewerRow{}{ReviewerFour}\cline{2-5}
+        \proposalReviewerRow{\raisebox{4.7mm}[0pt][0pt]{成员}}{ReviewerFive}\cline{2-5}
+        \proposalReviewerRow{}{ReviewerSix}\cline{2-5}
+        \proposalReviewerRow{}{ReviewerSeven}\hline
+        \proposalReviewerRow{秘书}{Secretary}\hline
+        \proposalFullRow{\proposalReviewBlock{62mm}{\bfseries 评审意见：}
+          {\bfseries 评定等级（在\underline{\hspace{2em}}处打分）：\par
+           \hspace*{6mm}\makebox[.47\linewidth][l]{优秀（$\geq 85$）\underline{\hspace{15mm}}}良好（84--75）\underline{\hspace{15mm}}\par
+           \hspace*{6mm}\makebox[.47\linewidth][l]{合格（74--60）\underline{\hspace{15mm}}}不合格（$<60$）\underline{\hspace{15mm}}\par
+           \vspace{4mm}\centering 评审小组组长签字：\hspace{18mm}日期：\hspace{12mm}}}\\\hline
+        \proposalFullRow{\proposalReviewBlock{31mm}{\bfseries 十、所在二级单位意见}
+          {\centering 负责人签字：\hspace{18mm}（单位盖章）日期：\hspace{8mm}}}\\\hline
+      \end{tabular}}\par
+  \endgroup
+}

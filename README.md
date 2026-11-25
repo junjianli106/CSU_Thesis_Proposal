@@ -1,23 +1,18 @@
 # 中南大学研究生学位论文开题报告 LaTeX 模板
 
-中南大学研究生学位论文开题报告 LaTeX 模板。本模板采用了如下的参考文献格式，示例如下：
+本模板参照中南大学《研究生学位论文开题报告》Word 表格排版。默认示例共 9 页，包括封面、七个正文栏目和评审签字页。各栏内容较长时可自动续页。
 
-```
-Aubreville, M., Stathonikos, N., Bertram, C. A., Klopfleisch, R., Ter Hoeve, N., Ciompi, F., Wilm, F., Marzahl, C., Donovan, T. A., Maier, A. et al. (2023). Mitosis domain generalization in histopathology images—the midog challenge. 84 Medical Image Analysis, , 102699.
-```
+## 填写与编译
 
-注意： 得使用XeLatex编译
+1. 在 `Proposal.tex` 中修改姓名、学号、论文题目、课题来源、攻读学位、导师、专业、二级单位和日期，然后替换正文示例。
+2. 评审表默认留空，便于手写。若需要预填，`\ReviewerOne` 对应组长，`\ReviewerTwo` 至 `\ReviewerSeven` 对应六位成员，`\Secretary` 对应秘书。三个参数依次为姓名、职称、工作单位。
+3. 参考文献放入 `ref.bib`。在仓库根目录执行以下命令，生成 `Proposal.pdf`。
 
-注意： 得使用XeLatex编译
+   ```bash
+   latexmk -xelatex Proposal.tex
+   ```
 
-注意： 得使用XeLatex编译
-
-## 特点
-
-- 默认每节内容从新页开始（使用 `\newpage` 命令）
-- 可通过删除 `\newpage` 命令轻松取消章节换页
-- 符合中南大学开题报告规范要求
-- 添加中南大学背景水印
+中文优先使用宋体（SimSun），缺少该字体时使用 TeX Live 附带的 Fandol 宋体。西文优先使用 Times New Roman，缺少时使用 TeX Gyre Termes。
 
 ## 致谢
 

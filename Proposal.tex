@@ -1,5 +1,4 @@
 \documentclass[a4paper,12pt]{CSUResearchProposal}
-\usepackage[top=2.4cm, bottom=3cm, left=2.5cm, right=2.5cm]{geometry}
 \usepackage{indentfirst}
 \usepackage{extpfeil}
 %\usepackage{times}  % Times fonts
@@ -16,20 +15,6 @@
 \usepackage{amsthm}
 \usepackage{type1cm}
 \usepackage{type1ec}
-\usepackage{background}
-\usepackage{graphicx}
-
-% 全局设置背景图片
-\backgroundsetup{
-    scale=1, % 缩放系数
-    angle=0, % 旋转角度
-    opacity=0.6, % 透明度
-    contents={%
-        \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{./figures/csu_bg.jpg}
-    }
-}
-
-
 %\usepackage[a4,frame,center]{crop}
 %\usepackage{noinfo}
 % \usepackage{stmaryrd}
@@ -73,6 +58,7 @@
 \ReviewerFour{ }{ }{ }
 \ReviewerFive{ }{ }{ }
 \ReviewerSix{ }{ }{ }
+\ReviewerSeven{ }{ }{ }
 
 \Secretary{ }{ }{ }
 \maketitle
@@ -120,14 +106,13 @@ V = G\rho \iiint\limits_\Omega  {\frac{1}{{\sqrt {\Delta x_1^2 + \Delta x_2^2 + 
 
 \newpage
 
-\section{已有基础{\kaishu (与本项目有关的工作积累和已取得的成绩、已具备的条件、尚缺少的条件及解决途径)}}
+\section{已有基础(与本项目有关的工作积累和已取得的成绩、已具备的条件、尚缺少的条件及解决途径)}
 
 
+% Word 的第六、七栏在同一张表中各预留一页。
 \newpage
-
 \section{主要参考文献}
 \vspace*{-3ex}
-\bibliographystyle{unsrt}
 \bibliography{ref}
 %\bibliographystyle{IEEEtranN}   % (uses file "plain.bst")
 %\bibliography{ref}      % expects file "myrefs.bib"
